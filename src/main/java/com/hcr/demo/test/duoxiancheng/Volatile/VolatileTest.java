@@ -1,4 +1,4 @@
-package com.hcr.demo.test.duoxiancheng;
+package com.hcr.demo.test.duoxiancheng.Volatile;
 
 /**
  * @author Administrator
