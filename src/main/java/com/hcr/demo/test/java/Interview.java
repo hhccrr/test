@@ -173,9 +173,27 @@ public class Interview {
      *             1) 用过哪些原子类，他们的原理是什么。
      *             1) JUC下研究过哪些并发工具，讲讲原理。
      *             1) 用过线程池吗，如果用过，请说明原理，并说说newCache和newFixed有什么区别，构造函数的各个参数的含义是什么，比如coreSize，maxsize等。
+     *                  newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。(根据用户的任务数创建相应的线程来处理，该线程池不会对线程数目加以限制，完全依赖于JVM能创建线程的数量，可能引起内存不足。 底层是基于ThreadPoolExecutor实现，借助reentrantlock保证并发。 coreSize核心线程数，maxsize最大线程数。)
+     *                  newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待
+     *                  newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。
+     *                  ewSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
+     *                  参数：
+     *                  corePoolSize:线程池维护线程的最少数量(core:核心)
+     *                  maximumPoolSize:线程池维护线程的最大数量 
+     *                  keepAliveTime:线程池维护线程所允许的空闲时间
+     *                  unit:线程池维护线程所允许的空闲时间的单位
+     *                  workQueue:线程池所使用的缓冲队列
+     *                  handler:线程池对拒绝任务的处理策略
+     *
      *             1) 线程池的关闭方式有几种，各自的区别是什么。
+     *                  shutdown():调用之后，不可以再添加新的任务，会把已经添加的全部执行完再关闭线程
+     *                  shutdownNow()：调用之后会停止当前正在执行的task,并返回尚未执行的task的集合
      *             1) 假如有一个第三方接口，有很多个线程去调用获取数据，现在规定每秒钟最多有10个线程同时调用它，如何做到。
      *             1) spring的controller是单例还是多例，怎么保证并发的安全。
+     *                是单例，尽量不要在controller中定义成员变量，
+     *                非要定义非成员变量的时候通过注解@Scope("prototype")设置成多例
+     *                在controller中使用ThreaderLocal变量
+     *
      *             1) 用三个线程按顺序循环打印abc三个字母，比如abcabcabc。
      *             1) ThreadLocal用过么，用途是什么，原理是什么，用的时候要注意什么。
      *             1) 如果让你实现一个并发安全的链表，你会怎么做。
