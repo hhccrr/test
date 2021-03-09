@@ -318,6 +318,22 @@ public class Interview {
      *             1) SQL优化的一般步骤是什么，怎么看执行计划，如何理解其中各个字段的含义。
      *             1) 数据库会死锁吗，举一个死锁的例子，mysql怎么解决死锁。
      *             1) MYsql的索引原理，索引的类型有哪些，如何创建合理的索引，索引如何优化。
+     *                原理：索引就是数据表中一个或多个列排序的数据结构
+     *                类型：
+     *                      普通类型（CREATE INDEX)
+     *                      唯一索引，索引列的值必须唯一（CREATE UNIQUE INDEX)
+     *                      多列索引
+     *                      主键索引（PRIMARY KEY），一个表只能有一个
+     *                      全文索引（FULLTEXT INDEX），InnoDB 不支持
+     *                创建：
+     *                      经常用作查询条件的字段
+     *                      经常作用在连接表的字段
+     *                      经常出现在order By、group By后的子弹
+     *                优化：
+     *                      字段非空，NOT NULL，mysql很难对空值做查询优化
+     *                      作为索引的字段尽量不要有大量相同的值
+     *                      索引长度不要太长（比较耗费时间）
+     *
      *             1) 聚集索引和非聚集索引的区别。
      *             1) select for update 是什么含义，会锁表还是锁行或是其他。
      *             1) 为什么要用Btree实现，它是怎么分裂的，什么时候分裂，为什么是平衡的。
@@ -326,7 +342,16 @@ public class Interview {
      *             1) Mysql怎么优化table scan的。
      *             1) 如何写sql能够有效的使用到复合索引。
      *             1) mysql中in 和exists 区别。
+     *                select * from A where A.id in (select id from B)
+     *                select * from A where exists (select 1 form B where A.id = B.id) B表数据大于A表数据用exists
+     *                in适合A表数据大于B表数据,in()查询是从缓存中查询
+     *                exists适合A表数据小于B表数据，exists()不会把查询结果放入缓存，他返回一个Boolean,只在乎exists()中是否有记录，与具体的结果集无关
+     *                A表和B表数据相等的情况下，两个可以任选一个，效率差不多
+     *
      *             1) 数据库自增主键可能的问题。
+     *                 如果项目移植，数据库冲突较大
+     *                 分库分表中可能会导致主键重复
+     *
      *             1) MVCC的含义，如何实现的。
      *             1) 你做过的项目里遇到分库分表了吗，怎么做的，有用到中间件么，比如sharding jdbc等,他们的原理知道么。
      *             1) MYSQL的主从延迟怎么解决。
