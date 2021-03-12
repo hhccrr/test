@@ -4,7 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>springBean</module>
+<!--        <module>activitimodule</module>-->
+        <module>springbeanlive</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -70,6 +71,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.9</version>
         </dependency>
     </dependencies>
 
