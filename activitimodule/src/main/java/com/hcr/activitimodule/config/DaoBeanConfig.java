@@ -18,11 +18,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * @author cayden
- * @date 2020/04/03
- * @desc
- */
 @Configuration
 @EnableTransactionManagement
 public class DaoBeanConfig implements EnvironmentAware {
